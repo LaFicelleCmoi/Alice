@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.env
+.idea/
+.vscode/
+.DS_Store
+# Sorties générées (cache bookworm + JSON/PNG de main.py) — régénérables
+outputs/*
+!outputs/.gitkeep
+out/
+
+# Données volumineuses téléchargées — régénérables via tools.py / loader
+data/books/*.txt
+!data/books/.gitkeep
+data/pg_catalog.csv
+nltk_data/
+
+# Brouillons de travail temporaires
+.commit_drafts/

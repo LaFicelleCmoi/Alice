@@ -1,0 +1,12 @@
+# Normalise les fins de ligne : LF dans le dépôt, pour la portabilité multi-OS.
+* text=auto
+
+# Les scripts Python doivent rester en LF — un shebang terminé par CRLF
+# casserait `./calculator.py` / `./bookworm.py` sous Linux/macOS.
+*.py text eol=lf
+*.sh text eol=lf
+
+# Fichiers binaires : aucune conversion.
+*.png binary
+*.jpg binary
+*.gz binary
