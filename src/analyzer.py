@@ -38,21 +38,16 @@ class TextStats:
     avg_word_length: float
 
 
-# Titres / civilités qui PRÉCÈDENT un nom de personne dans un roman.
 PERSON_TITLES = {
     "mr", "mrs", "ms", "miss", "sir", "lord", "lady", "dr", "doctor",
     "professor", "captain", "major", "colonel", "general", "king", "queen",
     "prince", "princess", "duke", "duchess", "father", "mother", "uncle",
     "aunt", "monsieur", "madame", "mademoiselle", "saint", "st",
 }
-# Verbes de dialogue typiques — un mot capitalisé qui les suit est presque
-# toujours un personnage.
 DIALOGUE_VERBS = {"said", "asked", "replied", "answered", "shouted", "whispered",
                   "exclaimed", "cried", "muttered", "murmured", "thought"}
-# Prépositions de lieu : un mot capitalisé qui les suit est plutôt un lieu.
 PLACE_PREPS = {"in", "at", "to", "from", "near", "into", "toward", "towards",
                "across", "through", "around", "over"}
-# Suffixes typiques de toponymes anglais.
 PLACE_SUFFIXES = ("ville", "town", "shire", "borough", "burg", "ford", "field",
                   "land", "wood", "wick", "ton", "ham", "port", "haven",
                   "mouth", "bridge")
