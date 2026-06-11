@@ -14,8 +14,6 @@ from .loader import Book
 from .preprocessing import split_into_chapters, tokenize
 
 
-# Mots-clés indicatifs par genre. Volontairement courts et lisibles : c'est un projet
-# pédagogique, pas un classifieur de production.
 GENRE_KEYWORDS: dict[str, list[str]] = {
     "aventure": ["adventure", "journey", "quest", "treasure", "island", "ship", "voyage", "explore"],
     "amour": ["love", "heart", "marriage", "kiss", "passion", "romance", "tender", "lover"],
@@ -115,11 +113,7 @@ def discover_topics(
     n_top_words: int = 8,
     lang: str = "english",
 ) -> list[TopicResult]:
-    """Découvre `n_topics` sujets latents via LDA sur des fenêtres du livre.
-
-    On découpe le texte en pseudo-documents pour donner à LDA quelque chose à
-    cooccurrencer ; sinon, sur un texte unique, l'algorithme n'a rien à modéliser.
-    """
+    """Découvre `n_topics` sujets latents via LDA sur des fenêtres du livre."""
     from .preprocessing import chunk_by_words
 
     chunks = chunk_by_words(text, words_per_chunk=500)
@@ -171,7 +165,7 @@ def topics_per_section(
     n_top_words: int = 6,
     lang: str = "english",
 ) -> list[dict]:
-    """Extrait les sujets principaux de **chaque section** d'un livre.
+    """Extrait les sujets principaux de **chaque section** d'un livre."""
 
     Découpe le texte en chapitres (via `split_into_chapters`) ; pour chaque
     chapitre, applique LDA et renvoie le top-k de ses sujets. Si aucun chapitre
@@ -205,7 +199,7 @@ def find_similar_books(
     top_n: int = 5,
     lang: str = "english",
 ) -> list[dict]:
-    """Recommande les **livres les plus similaires** au livre cible.
+    """Recommande les **livres les plus similaires** au livre cible."""
 
     Vectorise le corpus complet (cible incluse, mais retirée des résultats) en
     TF-IDF puis renvoie les `top_n` livres ayant la plus grande similarité
