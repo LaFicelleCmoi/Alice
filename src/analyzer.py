@@ -14,8 +14,6 @@ from dataclasses import asdict, dataclass
 from .preprocessing import ensure_nltk_resources, sentences as split_sentences, tokenize
 
 
-# Lexique simple positif/négatif (anglais) — léger et sans dépendance externe.
-# Issu d'une sélection des listes Hu-Liu / Bing Liu, version éducative et resserrée.
 POSITIVE_WORDS = {
     "good", "great", "happy", "joy", "love", "beautiful", "wonderful", "kind",
     "noble", "brave", "peace", "hope", "free", "smile", "laugh", "warm", "bright",
@@ -64,7 +62,7 @@ PLACE_SUFFIXES = ("ville", "town", "shire", "borough", "burg", "ford", "field",
 class SentimentResult:
     positive_hits: int
     negative_hits: int
-    polarity: float  # entre -1 et 1
+    polarity: float
     label: str
 
 
