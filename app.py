@@ -15,9 +15,6 @@ from src import analyzer, classifier, summarizer
 from src.loader import load_from_file, load_from_gutenberg
 
 
-# ---------------------------------------------------------------------------
-# Aide-mémoire des 21 IDs du catalogue — injecté dans le menu ⋮ (« About »).
-# ---------------------------------------------------------------------------
 
 def _build_ids_about_text() -> str:
     """Construit le markdown listant les 21 IDs, groupé par catégorie."""
@@ -65,9 +62,7 @@ st.title("📚 T-ALICE")
 st.caption("T-AIA-600 — découverte du NLP : résumé, classification thématique, analyse de livres.")
 
 
-# ---------------------------------------------------------------------------
-# Chargement (mis en cache)
-# ---------------------------------------------------------------------------
+
 
 @st.cache_data(show_spinner=False)
 def cached_gutenberg(book_id: int):
@@ -102,7 +97,7 @@ with st.sidebar:
                                               "📁 Fichier local"])
     book = None
 
-    # --- Catalogue imposé : 21 livres groupés par catégorie -----------------
+   
     if source == "📚 Catalogue (21 livres)":
         grouped = _group_books_by_category()
         labels: list[str] = []
@@ -129,7 +124,7 @@ with st.sidebar:
         else:
             st.info("Choisis un livre (pas un séparateur de catégorie).")
 
-        # Aide-mémoire dépliable des 21 IDs ----------------------------------
+        
         with st.expander("📋 Aide-mémoire des 21 IDs"):
             for shelf in ("Children / Young Adult",
                           "Crime, Mystery & Thriller",
@@ -139,7 +134,7 @@ with st.sidebar:
                 for bid, title in grouped.get(shelf, []):
                     st.markdown(f"- `{bid}` — {title}")
 
-    # --- ID Gutenberg libre (hors catalogue) --------------------------------
+    
     elif source == "🔢 ID Gutenberg libre":
         book_id = st.number_input("ID Gutenberg", min_value=1, value=11, step=1)
         st.caption("Exemples connus hors catalogue : 1342 (Pride and Prejudice), "
@@ -169,9 +164,6 @@ if book is None:
     st.stop()
 
 
-# ---------------------------------------------------------------------------
-# Métadonnées
-# ---------------------------------------------------------------------------
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Titre", book.title[:30] + ("…" if len(book.title) > 30 else ""))
@@ -180,9 +172,7 @@ c3.metric("Mots", f"{book.word_count:,}")
 c4.metric("Caractères", f"{book.char_count:,}")
 
 
-# ---------------------------------------------------------------------------
-# Onglets
-# ---------------------------------------------------------------------------
+
 
 tab_sum, tab_cls, tab_topics, tab_stats, tab_keywords, tab_text = st.tabs([
     "📝 Résumé", "🎭 Genres", "🔬 Sujets latents",
@@ -190,7 +180,7 @@ tab_sum, tab_cls, tab_topics, tab_stats, tab_keywords, tab_text = st.tabs([
 ])
 
 
-# --- Résumé ---------------------------------------------------------------
+
 
 with tab_sum:
     col_a, col_b, col_c = st.columns([1, 1, 2])
@@ -224,7 +214,7 @@ with tab_sum:
                 st.markdown(f"**{i}.** {s}")
 
 
-# --- Genres ---------------------------------------------------------------
+
 
 with tab_cls:
     st.markdown("Score de chaque genre selon la fréquence relative de ses mots-clés (en ‰).")
@@ -234,7 +224,7 @@ with tab_cls:
     st.dataframe(df, use_container_width=True, hide_index=True)
 
 
-# --- Sujets latents -------------------------------------------------------
+
 
 with tab_topics:
     n_topics = st.slider("Nombre de sujets (LDA)", 2, 10, 5)
@@ -249,7 +239,7 @@ with tab_topics:
             st.divider()
 
 
-# --- Statistiques ---------------------------------------------------------
+
 
 with tab_stats:
     stats = analyzer.text_statistics(book.text, lang=lang)
@@ -275,7 +265,7 @@ with tab_stats:
                  use_container_width=True, hide_index=True)
 
 
-# --- Mots-clés ------------------------------------------------------------
+
 
 with tab_keywords:
     n_kw = st.slider("Nombre de mots-clés", 10, 50, 25)
@@ -285,7 +275,7 @@ with tab_keywords:
     st.dataframe(df_kw, use_container_width=True, hide_index=True)
 
 
-# --- Texte brut -----------------------------------------------------------
+
 
 with tab_text:
     st.text_area("Extrait (3000 premiers caractères)", book.text[:3000], height=400)
