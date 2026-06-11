@@ -121,9 +121,6 @@ def top_keywords(text: str, n: int = 20, lang: str = "english") -> list[tuple[st
     return Counter(tokens).most_common(n)
 
 
-# Extraction d'entités basée sur la casse — simple mais étonnamment robuste sur les
-# romans anglais. Pour faire mieux, brancher spaCy sur le module ; ce n'est pas
-# obligatoire pour la démo.
 NAME_RE = re.compile(r"\b([A-Z][a-z]{2,})(?:\s+([A-Z][a-z]{2,}))?\b")
 
 
@@ -133,7 +130,6 @@ def _iter_candidate_entities(text: str):
         words = sent.strip().split()
         if len(words) < 2:
             continue
-        # On saute le tout premier mot (toujours capitalisé).
         for i in range(1, len(words)):
             joined = " ".join(words[i:])
             m = NAME_RE.match(joined)
@@ -173,7 +169,7 @@ def extract_characters(text: str, top_n: int = 15) -> list[tuple[str, int]]:
             is_person = True
         elif prev in DIALOGUE_VERBS:
             is_person = True
-        elif " " in full:  # « John Smith » → très souvent un personnage
+        elif " " in full:
             is_person = True
         if is_person and full not in place_set:
             counter[full] += 1
@@ -226,7 +222,6 @@ def lexical_diversity(text: str, lang: str = "english") -> dict[str, float]:
     cttr = v / math.sqrt(2 * n)
     herdan_c = math.log(v) / math.log(n) if n > 1 else 0.0
     maas_a2 = (math.log(n) - math.log(v)) / (math.log(n) ** 2) if v < n else 0.0
-    # Yule's K = 10^4 * (Σ m² f_m  −  N) / N²
     fm_counts: Counter[int] = Counter(freqs.values())
     sigma = sum(m * m * fm for m, fm in fm_counts.items())
     yule_k = 10_000 * (sigma - n) / (n * n)
